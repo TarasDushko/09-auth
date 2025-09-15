@@ -21,6 +21,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 const roboto = Roboto({
@@ -41,13 +44,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.variable}>
         <TanStackProvider>
-          <Header />
-          <main>
-            {children}
-            {modal}
-          </main>
-          <Footer />
-          <div id="modal-root"></div>
+          <AuthProvider>
+            <Header />
+            <main>
+              {children}
+              {modal}
+            </main>
+            <Footer />
+            <div id="modal-root"></div>
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>
