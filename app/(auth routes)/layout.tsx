@@ -15,4 +15,3 @@ export default function SignInUpLayout({
   }, [router]);
   return <>{children}</>;
 }
-і;

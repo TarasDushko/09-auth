@@ -40,8 +40,8 @@ export async function middleware(req: NextRequest) {
       return res;
     } catch {
       const res = NextResponse.redirect(new URL("/sign-in", req.url));
-      res.cookies.delete("accessToken", { path: "/" });
-      res.cookies.delete("refreshToken", { path: "/" });
+      res.cookies.delete({ name: "accessToken", path: "/" });
+      res.cookies.delete({ name: "refreshToken", path: "/" });
       return res;
     }
   }

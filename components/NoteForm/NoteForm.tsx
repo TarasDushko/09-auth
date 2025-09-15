@@ -13,16 +13,6 @@ interface FormValues {
   tag: string;
 }
 
-const initialFormValues: FormValues = {
-  title: "",
-  content: "",
-  tag: "Todo",
-};
-
-interface NoteFormProps {
-  onCancel: () => void;
-}
-
 export default function NoteForm({ tags }: { tags: string[] }) {
   const queryClient = useQueryClient();
   const router = useRouter();
