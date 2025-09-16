@@ -4,7 +4,7 @@ import { Note } from "@/types/note";
 import { User } from "@/types/user";
 import { RegisterRequest, LoginRequest } from "@/types/auth";
 import { nextServer } from "./api";
-import { AxiosError, isAxiosError } from "axios";
+import { isAxiosError } from "axios";
 
 export interface FetchNotesResponse {
   notes: Note[];
@@ -23,14 +23,14 @@ async function handleRequest<T>(
     return data;
   } catch (err: unknown) {
     if (isAxiosError(err)) {
-      // Перевіряємо, чи є message у response.data
-      const message =
-        err.response &&
-        err.response.data &&
-        typeof (err.response.data as any).message === "string"
-          ? (err.response.data as any).message
-          : defaultError;
-      throw new Error(message);
+      //типізація response.data
+      const apiMessage =
+        err.response?.data &&
+        typeof (err.response.data as { message?: unknown }).message === "string"
+          ? (err.response.data as { message: string }).message
+          : null;
+
+      throw new Error(apiMessage ?? defaultError);
     }
     throw new Error(defaultError);
   }
