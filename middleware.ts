@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
   // Якщо немає accessToken, але є refreshToken пробуємо оновити
   if (!accessToken && refreshToken) {
     try {
-      const newTokens = await checkSession(refreshToken);
+      const { data: newTokens } = await checkSession();
 
       const res = NextResponse.next();
 
