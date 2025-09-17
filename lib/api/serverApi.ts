@@ -54,11 +54,20 @@ export const logoutServer = async () =>
     "Logout failed"
   );
 
-export const checkSession = async (refreshToken: string) =>
-  handleRequest(
-    nextServer.post<SessionResponse>("/auth/refresh", { refreshToken }),
-    "Session refresh failed"
-  );
+export const checkSession = async () => {
+  try {
+    const response = await nextServer.get<SessionResponse>(
+      "/auth/session",
+      await getAuthHeaders()
+    );
+    return response;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Session check failed");
+    }
+    throw new Error("Session check failed");
+  }
+};
 
 // Користувач
 export const getUserProfile = async () =>
